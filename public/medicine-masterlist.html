@@ -12,8 +12,14 @@
 </head>
 <body>
   <header class="top-bar">
-    <div class="logo">Logo here</div>
-  </header>
+  <div class="logo">Logo here</div>
+  <div class="top-actions">
+    <a href="/login" class="logout-btn">
+      <i class="fa-solid fa-right-from-bracket"></i> Logout
+    </a>
+  </div>
+</header>
+
 
   <div class="dashboard-wrapper">
     <div class="folder-tab-wrapper">
@@ -25,7 +31,7 @@
           <i class="fa-solid fa-chart-line"></i> Dashboard
         </a>
         <a href="#" class="tab-btn active">
-          <i class="fa-solid fa-pills"></i> Medicine Masterlist
+          <i class="fa-solid fa-users-gear"></i> User Management
         </a>
       </div>
     </div>
@@ -33,7 +39,6 @@
     <div class="main-card">
       <div class="inner-header">
         <input type="text" placeholder="Search for Medicine" class="search-bar"/>
-        <button class="add-btn"><i class="fa-solid fa-plus"></i> Add new item</button>
       </div>
 
       <div class="table-wrapper">
@@ -55,13 +60,6 @@
               <td>Paracetamol</td>
               <td>
                 Biogesic
-                <div class="dropdown">
-                  <button class="dropdown-toggle">⋮</button>
-                  <div class="dropdown-menu">
-                    <a href="#">Edit Brand</a>
-                    <a href="#">Delete Brand</a>
-                  </div>
-                </div>
               </td>
               <td>Pain reliever / fever reducer</td>
               <td>500 mg</td>

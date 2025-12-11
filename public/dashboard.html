@@ -12,8 +12,14 @@
 </head>
 <body>
   <header class="top-bar">
-    <div class="logo">Logo here</div>
-  </header>
+  <div class="logo">Logo here</div>
+  <div class="top-actions">
+    <a href="/login" class="logout-btn">
+  <i class="fa-solid fa-right-from-bracket"></i> Logout
+</a>
+  </div>
+</header>
+
   <div class="dashboard-wrapper">
     <div class="folder-tab-wrapper">
       <div class="folder-tab">
@@ -44,14 +50,12 @@
           <div class="widget-card">
             <div class="widget-header">
               <div class="widget-title logs-title"><i class="fa-solid fa-list-ul"></i> &nbsp; Logs</div>
-              <i class="fa-solid fa-rotate-right refresh-icon"></i>
             </div>
             <ul class="widget-list"></ul>
           </div>
           <div class="widget-card">
             <div class="widget-header">
               <div class="widget-title security-title"><i class="fa-solid fa-triangle-exclamation"></i> &nbsp; Security Alert</div>
-              <i class="fa-solid fa-rotate-right refresh-icon"></i>
             </div>
             <ul class="widget-list"></ul>
           </div>

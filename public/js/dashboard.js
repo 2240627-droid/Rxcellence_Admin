@@ -33,7 +33,7 @@ async function loadAlerts() {
     if (alerts.length > 0) {
       list.innerHTML = alerts.map(alert => `
         <li class="warning">
-          ⚠️ ${alert.action.replace(/_/g, ' ')} — ${alert.user} (${alert.timestamp})
+           ${alert.action.replace(/_/g, ' ')} — ${alert.user} (${alert.timestamp})
         </li>
       `).join('');
     } else {

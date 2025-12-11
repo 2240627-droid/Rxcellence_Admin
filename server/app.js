@@ -32,16 +32,39 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../login.html'));
 });
 
+// Login page route
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, '../login.html')); 
+});
+
 // Protect dashboard page
 app.get('/dashboard.html', requireAuth, (req, res) => {
   res.sendFile(path.join(__dirname, '../public/dashboard.html'));
 });
+
+// Protect medicine masterlist page
+app.get('/medicine-masterlist.html', requireAuth, (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/medicine-masterlist.html'));
+});
+
 
 // Auth routes
 app.use('/auth', authRoutes);
 
 
 app.use('/api', requireAuth, dashboardRoutes);
+
+// Logout route
+app.get('/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      console.error('Error destroying session:', err);
+      return res.status(500).send('Logout failed');
+    }
+    res.redirect('/login.html');
+  });
+});
+
 
 // 404 fallback
 app.use((req, res) => {
