@@ -7,6 +7,7 @@ const medicineRoutes = require('../screens/adminMedicineMasterList/routes/medici
 // Routes
 const authRoutes = require('../screens/auth/routes/auth');
 const dashboardRoutes = require('../screens/adminDashboard/routes/dashboard');
+const userManagementRoutes = require('../screens/adminUserManagement/routes/usermanagementRoutes');
 
 // Middleware
 const { requireAuth } = require('./middleware/auth');
