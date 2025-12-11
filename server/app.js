@@ -48,6 +48,10 @@ app.get('/medicine-masterlist.html', requireAuth, (req, res) => {
   res.sendFile(path.join(__dirname, '../public/medicine-masterlist.html'));
 });
 
+// Protect usermanagement page
+app.get('/usermanagement.html', requireAuth, (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/usermanagement.html'));
+});
 
 // Auth routes
 app.use('/auth', authRoutes);
