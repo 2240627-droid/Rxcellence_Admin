@@ -1,6 +1,6 @@
 const db = require('../../../server/config/db');
 
-async function fetchMedicines(limit = 10, sort = 'ASC') {
+async function fetchMedicines(limit = 50, sort = 'ASC') {
   const order = sort.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
   const query = `
   SELECT 
@@ -13,7 +13,7 @@ async function fetchMedicines(limit = 10, sort = 'ASC') {
     price
 FROM medicines
     ORDER BY med_id ${order}
-    LIMIT ${Number(limit) || 10}
+    LIMIT ${Number(limit) || 50}
   `;
   const [rows] = await db.query(query);
   return rows || [];

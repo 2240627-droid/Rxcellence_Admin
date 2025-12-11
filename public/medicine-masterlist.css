@@ -157,11 +157,11 @@ table {
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
-  background-color: #f6f4f0;
+  background-color: #f0f6f3;
 }
 
 thead {
-  background-color: #dbece5;
+  background-color: #b0e4ce;
   position: sticky;
   top: 0;
   z-index: 10;
@@ -193,6 +193,23 @@ td {
   color: #555;
   vertical-align: top;
 }
+
+.table-scroll {
+  max-height: 400px;   
+  overflow-y: auto;    
+  overflow-x: auto;    
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+/* keep header sticky */
+thead {
+  background-color: #b0e4ce;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
 
 
 /* --- Responsive --- */
