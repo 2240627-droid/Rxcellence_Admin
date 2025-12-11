@@ -1,7 +1,7 @@
 const db = require("../../../server/config/db");
 const { Parser } = require("json2csv");
 exports.dashboard = (req, res) => {
-  res.render("adminUserManagement/view/usermanagement", { title: "User Management" });
+  res.render("public/usermanagement", { title: "User Management" });
 };
 
 exports.listDoctors = async (req, res) => {
@@ -151,3 +151,4 @@ exports.bulkDeleteUsers = async (req, res) => {
     res.status(500).json({ success: false, message: "Server error" });
   }
 };
+
