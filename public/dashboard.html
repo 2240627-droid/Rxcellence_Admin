@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+
+  <!-- Importing Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Linking the external CSS file -->
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+  <header class="top-bar">
+    <div class="logo">Logo here</div>
+  </header>
+
+  <div class="dashboard-wrapper">
+    <div class="folder-tab-wrapper">
+      <div class="folder-tab">
+        <h1>Admin Dashboard</h1>
+      </div>
+
+      <div class="tab-buttons">
+        <a href="#" class="tab-btn">
+          <i class="fa-solid fa-pills"></i> Medicine Masterlist
+        </a>
+        <a href="#" class="tab-btn">
+          <i class="fa-solid fa-users-gear"></i> User Management
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Card Body -->
+    <div class="main-card">
+      <div class="inner-header">
+        <div class="sub-nav-group">
+          <a href="#" class="sub-nav-btn">
+            <i class="fa-solid fa-binoculars"></i> System Monitoring
+          </a>
+        </div>
+
+        <div class="time-filters">
+          <span class="active">Day</span>
+          <span>Week</span>
+          <span>Month</span>
+        </div>
+      </div>
+
+      <!-- Dashboard Grid -->
+      <div class="dashboard-grid">
+        <!-- Left Sidebar -->
+        <aside class="left-panel">
+          <div class="widget-card">
+            <div class="widget-header">
+              <div class="widget-title logs-title">
+                <i class="fa-solid fa-list-ul"></i> &nbsp; Logs
+              </div>
+              <i class="fa-solid fa-rotate-right refresh-icon"></i>
+            </div>
+            <ul class="widget-list">
+              <!-- Logs will be dynamically injected here -->
+            </ul>
+          </div>
+
+          <div class="widget-card">
+            <div class="widget-header">
+              <div class="widget-title security-title">
+                <i class="fa-solid fa-triangle-exclamation"></i> &nbsp; Security Alert
+              </div>
+              <i class="fa-solid fa-rotate-right refresh-icon"></i>
+            </div>
+            <ul class="widget-list">
+              <!-- Alerts will be dynamically injected here -->
+            </ul>
+          </div>
+        </aside>
+
+        <!-- Right Table Section -->
+        <section class="table-container">
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Timestamp <i class="fa-solid fa-sort"></i></th>
+                  <th>Patient <i class="fa-solid fa-sort"></i></th>
+                  <th>Action <i class="fa-solid fa-sort"></i></th>
+                  <th>Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Activity/timestamps rows will be dynamically injected here -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/dashboard.js"></script>
+</body>
+
+</html>

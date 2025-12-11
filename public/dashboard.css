@@ -1,0 +1,432 @@
+/* --- CSS RESET --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* --- BODY STYLES --- */
+body {
+    background-color: #043b2b;
+    font-family: 'Inter', sans-serif;
+    color: #1a1a1a;
+    padding: 20px 40px;
+    min-height: 100vh;
+}
+
+/* --- TOP BAR --- */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 80px;
+    margin-bottom: 0;
+    padding-bottom: 5px;
+}
+
+.logo {
+    color: white;
+    font-family: 'DM Serif Display', serif;
+    font-size: 36px;
+    margin-left: 10px;
+}
+
+.top-nav-pills {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+/* --- FOLDER TAB WRAPPER --- */
+.folder-tab-wrapper {
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* --- FOLDER TAB --- */
+.folder-tab {
+    background-color: #f6f4f0;
+    width: fit-content;
+    padding: 15px 50px 15px 40px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 50px;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+}
+
+.folder-tab h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    color: #0d2e23;
+    font-weight: 400;
+    margin: 0;
+}
+
+/* --- TAB BUTTONS BESIDE ADMIN DASHBOARD --- */
+.tab-buttons {
+    display: flex;
+    gap: 15px;
+    margin-bottom: -1px;
+}
+
+.tab-btn {
+    background-color: #dbece5;
+    color: #0d2e23;
+    text-decoration: none;
+    padding: 12px 25px;
+    border-radius: 15px 15px 0 0;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+    background-color: #c5d9d0;
+    transform: translateY(-2px);
+}
+
+/* --- DASHBOARD WRAPPER --- */
+.dashboard-wrapper {
+    position: relative;
+}
+
+/* --- MAIN CARD --- */
+.main-card {
+    background-color: #f6f4f0;
+    border-radius: 0 30px 30px 30px;
+    padding: 30px 40px;
+    min-height: 70vh;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 1;
+}
+
+/* --- INNER HEADER --- */
+.inner-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.sub-nav-group {
+    display: flex;
+    gap: 15px;
+}
+
+.sub-nav-btn {
+    background-color: #dbece5;
+    color: #0d2e23;
+    text-decoration: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.sub-nav-btn:hover {
+    opacity: 0.9;
+}
+
+.time-filters {
+    display: flex;
+    gap: 20px;
+}
+
+.time-filters span {
+    font-weight: 700;
+    color: #bbb;
+    font-size: 20px;
+    cursor: pointer;
+    padding-bottom: 2px;
+}
+
+.time-filters span.active {
+    color: #1a1a1a;
+    border-bottom: 3px solid #1a1a1a;
+}
+
+/* --- DASHBOARD GRID --- */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 30px;
+    min-height: 500px;
+}
+
+/* --- LEFT PANEL WIDGETS --- */
+.left-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+.widget-card {
+    background-color: white;
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    border: 1px solid #eee;
+}
+
+.widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.widget-title {
+    font-weight: 700;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.widget-title i {
+    font-size: 20px;
+}
+
+.logs-title {
+    color: #0d2e23;
+}
+
+.security-title {
+    color: #0d2e23;
+}
+
+.security-title i {
+    color: #1a5c45;
+}
+
+.refresh-icon {
+    color: #0d2e23;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.widget-list {
+    list-style: none;
+}
+
+.widget-list li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.4;
+}
+
+.widget-list li::before {
+    content: "•";
+    color: #004d40;
+    font-weight: bold;
+    font-size: 20px;
+    position: absolute;
+    left: 0;
+    top: -5px;
+}
+
+/* --- TABLE CONTAINER --- */
+.table-container {
+    background-color: #dbece5;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid #d1d1d1;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 400px;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background-color: #f6f4f0;
+}
+
+thead {
+    background-color: #dbece5;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+th {
+    text-align: left;
+    padding: 15px 20px;
+    font-weight: 600;
+    color: #444;
+    white-space: nowrap;
+    border-bottom: 2px solid #c5d9d0;
+}
+
+th i {
+    margin-left: 5px;
+    font-size: 12px;
+    color: #666;
+    cursor: pointer;
+}
+
+tbody tr {
+    background-color: #fcfbf9;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+tbody tr:last-child {
+    border-bottom: none;
+}
+
+tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+td {
+    padding: 12px 20px;
+    color: #555;
+    vertical-align: top;
+}
+
+.col-details {
+    color: #666;
+    font-size: 13px;
+}
+
+/* --- TABLE COLUMN WIDTHS --- */
+th:first-child {
+    width: 180px;
+}
+
+th:nth-child(2) {
+    width: 100px;
+}
+
+th:nth-child(3) {
+    width: 180px;
+}
+
+/* --- RESPONSIVE DESIGN --- */
+@media (max-width: 1024px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .folder-tab-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .folder-tab {
+        width: 100%;
+        border-top-right-radius: 25px;
+    }
+    
+    .tab-buttons {
+        width: 100%;
+        justify-content: flex-start;
+    }
+    
+    .main-card {
+        border-top-right-radius: 0;
+    }
+    
+    /* For mobile, add vertical scroll if needed */
+    .table-wrapper {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+    
+    .top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+        margin-bottom: 20px;
+    }
+    
+    .top-nav-pills {
+        flex-wrap: wrap;
+        margin-top: 10px;
+    }
+    
+    .inner-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+    
+    .sub-nav-group {
+        flex-wrap: wrap;
+    }
+    
+    .folder-tab {
+        padding: 12px 30px 12px 25px;
+    }
+    
+    .folder-tab h1 {
+        font-size: 28px;
+    }
+    
+    .tab-btn {
+        padding: 10px 15px;
+        font-size: 13px;
+    }
+    
+    .main-card {
+        padding: 20px;
+    }
+    
+    .dashboard-grid {
+        min-height: 400px;
+    }
+}
+.widget-list {
+  max-height: 150px;   /* adjust height to fit your design */
+  overflow-y: auto;    /* enable vertical scrolling */
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.widget-list li {
+  padding: 4px 8px;
+  border-bottom: 1px solid #eee;
+}
+.widget-list li.warning {
+  color: #b00020;          /* red text */
+  font-weight: 600;
+  background: #ffe5e5;     /* light red background */
+  padding: 4px 8px;
+  border-left: 4px solid #b00020;
+}
+.warning-text {
+  color: #b00020;       /* red */
+  font-weight: 600;
+}
