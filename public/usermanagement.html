@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link rel="stylesheet" href="/medicine-masterlist.css" />
+    <link rel="stylesheet" href="/admin.css" />
+  </head>
+  <body>
+    <header class="top-bar">
+      <div class="logo">Logo here</div>
+      <div class="top-actions">
+        <a href="/login" class="logout-btn">
+          <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </a>
+      </div>
+    </header>
+
+    <div class="dashboard-wrapper">
+      <div class="folder-tab-wrapper">
+        <div class="folder-tab">
+          <h1>User Management</h1>
+        </div>
+        <div class="tab-buttons">
+          <a href="/dashboard.html" class="tab-btn">
+            <i class="fa-solid fa-chart-line"></i> Dashboard
+          </a>
+          <a href="/medicine-masterlist.html" class="tab-btn">
+            <i class="fa-solid fa-pills"></i> Medicine Masterlist
+          </a>
+        </div>
+      </div>
+
+      <div class="main-card">
+        <!-- Status Cards -->
+        <div class="status-cards">
+          <div class="card card-pending">
+            <h2>Pending</h2>
+            <p id="pendingCount">0</p>
+          </div>
+          <div class="card card-approved">
+            <h2>Approved</h2>
+            <p id="approvedCount">0</p>
+          </div>
+          <div class="card card-suspended">
+            <h2>Suspended</h2>
+            <p id="suspendedCount">0</p>
+          </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search by name, license, affiliation..."
+          />
+          <select id="roleFilter">
+            <option value="">All Roles</option>
+            <option value="doctor">Doctor</option>
+            <option value="pharmacist">Pharmacist</option>
+            <option value="patient">Patient</option>
+            <option value="admin">Admin</option>
+          </select>
+          <select id="statusFilter">
+            <option value="">All Status</option>
+            <option value="Pending">Pending</option>
+            <option value="Approved">Approved</option>
+            <option value="Suspended">Suspended</option>
+          </select>
+          <button id="applyFilters">Filter</button>
+        </div>
+
+        <!-- Users Table -->
+        <div class="users-table-container">
+          <table class="users-table">
+            <thead>
+              <tr>
+                <th><input type="checkbox" id="selectAll" /></th>
+                <th>Name</th>
+                <th>Role</th>
+                <th>License</th>
+                <th>Affiliation</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody"></tbody>
+          </table>
+        </div>
+
+        <!-- Bulk Actions -->
+        <div class="bulk-actions">
+          <button id="approveSelected" class="action-btn approve">
+            Approve
+          </button>
+          <button id="rejectSelected" class="action-btn reject">
+            Reject
+          </button>
+          <button id="activateSelected" class="action-btn activate">
+            Activate
+          </button>
+          <button id="suspendSelected" class="action-btn suspend">
+            Suspend
+          </button>
+          <button id="deleteSelected" class="action-btn delete">
+            Delete
+          </button>
+          <button id="exportCSV" class="action-btn export">Export CSV</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/user_management.js"></script>
+  </body>
+</html>
