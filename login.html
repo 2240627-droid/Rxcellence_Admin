@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login</title>
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-box">
+      <div class="logo-placeholder">Logo here</div>
+      <h2>Login to your account</h2>
+      <form action="/auth/login" method="POST">
+        <label for="admin_name">ID Number</label>
+        <input type="text" id="admin_name" name="admin_name" placeholder="Enter your ID Number" required />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required />
+
+        <button type="submit">LOGIN</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
