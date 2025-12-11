@@ -38,101 +38,29 @@
 
     <div class="main-card">
       <div class="inner-header">
-        <input type="text" placeholder="Search for Medicine" class="search-bar"/>
+       <input type="text" id="searchInput" placeholder="Search for Medicine" class="search-bar"/>
       </div>
 
       <div class="table-wrapper">
         <table>
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Brand</th>
-              <th>Category</th>
-              <th>Dosage</th>
-              <th>Form</th>
-              <th>Price</th>
+              <th data-sort="id">ID <span class="sort-icon"></span></th>
+              <th data-sort="name">Name <span class="sort-icon"></span></th>
+              <th data-sort="brand">Brand <span class="sort-icon"></span></th>
+              <th data-sort="category">Category <span class="sort-icon"></span></th>
+              <th data-sort="dosage">Dosage <span class="sort-icon"></span></th>
+              <th data-sort="form">Form <span class="sort-icon"></span></th>
+              <th data-sort="price">Price <span class="sort-icon"></span></th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>12234</td>
-              <td>Paracetamol</td>
-              <td>
-                Biogesic
-              </td>
-              <td>Pain reliever / fever reducer</td>
-              <td>500 mg</td>
-              <td>Tablet</td>
-              <td>₱2–₱6 per tablet</td>
-            </tr>
-            <tr>
-              <td>12235</td>
-              <td>Ibuprofen</td>
-              <td>Medical Advance</td>
-              <td>Pain reliever / anti-inflammatory</td>
-              <td>200 mg</td>
-              <td>Capsule</td>
-              <td>₱6–₱8 per capsule</td>
-            </tr>
-            <tr>
-              <td>12236</td>
-              <td>Amoxicillin</td>
-              <td>Amoxil</td>
-              <td>Antibiotic</td>
-              <td>500 mg</td>
-              <td>Capsule</td>
-              <td>₱10–₱15 per capsule</td>
-            </tr>
-            <tr>
-              <td>12237</td>
-              <td>Cetirizine</td>
-              <td>Alletra</td>
-              <td>Antihistamine (for allergy)</td>
-              <td>10 mg</td>
-              <td>Tablet</td>
-              <td>₱7–₱10 per tablet</td>
-            </tr>
-            <tr>
-              <td>12238</td>
-              <td>Salbutamol</td>
-              <td>Antihistamine</td>
-              <td>Bronchodilator (asthma)</td>
-              <td>100 mg / dose</td>
-              <td>Inhaler</td>
-              <td>₱7–₱10 per tablet</td>
-            </tr>
-            <tr>
-              <td>12239</td>
-              <td>Metformin</td>
-              <td>Bronchodilator</td>
-              <td>Antidiabetic</td>
-              <td>500 mg</td>
-              <td>Tablet</td>
-              <td>₱250–₱350 per Inhaler</td>
-            </tr>
-            <tr>
-              <td>12240</td>
-              <td>Omeprazole</td>
-              <td>Losec</td>
-              <td>Anti-ulcer / acid reducer</td>
-              <td>20 mg</td>
-              <td>Capsule</td>
-              <td>₱12–₱15 per capsule</td>
-            </tr>
-            <tr>
-              <td>12241</td>
-              <td>Loperamide</td>
-              <td>Diatabs</td>
-              <td>Antidiarrhea</td>
-              <td>2 mg</td>
-              <td>Capsule</td>
-              <td>₱12–₱18 per capsule</td>
-            </tr>
+          <tbody id="medicineTbody">
+            <!-- Medicine rows will be populated here dynamically -->
           </tbody>
         </table>
       </div>
     </div>
   </div>
-
+ <script src="js/medicine-masterlist.js" defer></script>
 </body>
+</html>

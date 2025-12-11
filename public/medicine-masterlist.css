@@ -141,6 +141,12 @@ body {
   margin-right: 1rem;
 }
 
+.sort-icon {
+  font-size: 0.8em;
+  margin-left: 5px;
+  color: #555;
+}
+
 
 /* --- TABLE --- */
 .table-wrapper {

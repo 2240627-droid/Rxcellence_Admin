@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const medicineRoutes = require('../screens/adminMedicineMasterList/routes/medicine');
 
 // Routes
 const authRoutes = require('../screens/auth/routes/auth');
@@ -50,8 +51,7 @@ app.get('/medicine-masterlist.html', requireAuth, (req, res) => {
 
 // Auth routes
 app.use('/auth', authRoutes);
-
-
+app.use('/api', requireAuth, medicineRoutes);
 app.use('/api', requireAuth, dashboardRoutes);
 
 // Logout route
