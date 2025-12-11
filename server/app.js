@@ -7,6 +7,7 @@ const medicineRoutes = require('../screens/adminMedicineMasterList/routes/medici
 // Routes
 const authRoutes = require('../screens/auth/routes/auth');
 const dashboardRoutes = require('../screens/adminDashboard/routes/dashboard');
+const userManagementRoutes = require('../screens/adminUserManagement/routes/usermanagementRoutes');
 
 // Middleware
 const { requireAuth } = require('./middleware/auth');
@@ -48,6 +49,10 @@ app.get('/medicine-masterlist.html', requireAuth, (req, res) => {
   res.sendFile(path.join(__dirname, '../public/medicine-masterlist.html'));
 });
 
+// Protect usermanagement page
+app.get('/usermanagement.html', requireAuth, (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/usermanagement.html'));
+});
 
 // Auth routes
 app.use('/auth', authRoutes);
