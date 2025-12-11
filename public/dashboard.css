@@ -408,25 +408,89 @@ th:nth-child(3) {
         min-height: 400px;
     }
 }
+/* Base widget list */
 .widget-list {
-  max-height: 150px;   /* adjust height to fit your design */
-  overflow-y: auto;    /* enable vertical scrolling */
+  max-height: 150px;       /* limit height */
+  overflow-y: auto;        /* scroll if too long */
   padding: 0;
   margin: 0;
   list-style: none;
 }
+
 .widget-list li {
-  padding: 4px 8px;
+  padding: 6px 10px;       /* slightly more breathing room */
   border-bottom: 1px solid #eee;
+  font-size: 0.95rem;      /* consistent text size */
+  line-height: 1.4;
 }
+
+/* Warning style */
 .widget-list li.warning {
   color: #b00020;          /* red text */
   font-weight: 600;
-  background: #ffe5e5;     /* light red background */
-  padding: 4px 8px;
+  background-color: #fff0f0; /* softer red background */
   border-left: 4px solid #b00020;
 }
+
+/* Inline warning text (used in titles) */
 .warning-text {
-  color: #b00020;       /* red */
+  color: #b00020;
   font-weight: 600;
+}
+/* Table header styles */
+th {
+  text-align: left;
+  padding: 8px 12px;
+  font-weight: 600;
+  background-color: #f9f9f9;
+  border-bottom: 2px solid #ddd;
+}
+
+/* Sort button */
+.sort-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 6px;
+  color: #555;
+  transition: color 0.2s ease;
+}
+.sort-btn:hover {
+  color: #000;
+}
+
+/* Flex alignment for header controls */
+.timestamp-header,
+.user-filter-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Dropdown filter (clean unified style) */
+.filter-select {
+  margin-left: 6px;
+  padding: 4px 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fafafa;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-select:hover {
+  background-color: #f0f0f0;
+  border-color: #999;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #666;
+  background-color: #fff;
+}
+.sort-btn i {
+  font-size: 0.9rem;
 }

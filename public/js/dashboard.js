@@ -1,65 +1,69 @@
-// public/js/dashboard.js
+console.log('dashboard.js loaded');
 
-// Helper: safely fetch JSON, detect HTML redirects
 async function safeFetchJSON(url) {
-  const res = await fetch(url);
+  const u = url.includes('?') ? `${url}&t=${Date.now()}` : `${url}?t=${Date.now()}`;
+  const res = await fetch(u, {
+    cache: 'no-store',
+    headers: { 'Cache-Control': 'no-cache' }
+  });
   const text = await res.text();
   if (text.startsWith('<!DOCTYPE')) {
-    // Redirected to login page
     window.location.href = '/login';
     return [];
   }
   return JSON.parse(text);
 }
 
-// Load system logs
 async function loadLogs() {
   try {
     const logs = await safeFetchJSON('/api/logs');
-    const list = document.querySelector('.logs-title').parentElement.nextElementSibling;
+    const list = document.querySelector('.logs-title')?.parentElement?.nextElementSibling;
+    if (!list) return;
     list.innerHTML = logs.map(log => `<li>${log.message}</li>`).join('');
   } catch (err) {
     console.error('Failed to load logs:', err);
   }
 }
 
-// Load security alerts
-// Load security alerts
 async function loadAlerts() {
   try {
     const alerts = await safeFetchJSON('/api/alerts');
-    const title = document.querySelector('.security-title');
-
+    const list = document.querySelector('.security-title')?.parentElement?.nextElementSibling;
+    if (!list) return;
     if (alerts.length > 0) {
-      // Show the latest alert in the title itself
-      const latest = alerts[0];
-      title.innerHTML = `
-        <i class="fa-solid fa-triangle-exclamation"></i> &nbsp;
-        Security Alert — <span class="warning-text">WARNING: ${latest.details}</span>
-      `;
+      list.innerHTML = alerts.map(alert => `
+        <li class="warning">
+          ⚠️ ${alert.action.replace(/_/g, ' ')} — ${alert.user} (${alert.timestamp})
+        </li>
+      `).join('');
     } else {
-      // Default title if no alerts
-      title.innerHTML = `
-        <i class="fa-solid fa-triangle-exclamation"></i> &nbsp; Security Alert
-      `;
+      list.innerHTML = '<li>No security alerts</li>';
     }
   } catch (err) {
     console.error('Failed to load alerts:', err);
   }
 }
 
+let sortOrder = 'DESC';
 
-// Load activity log (audit trail)
 async function loadActivity() {
   try {
-    const activity = await safeFetchJSON('/api/activity');
-    const tbody = document.querySelector('table tbody');
+    const userType = document.getElementById('userFilter')?.value || '';
+    console.log(`Request -> /api/activity?user_type=${userType}&sort=${sortOrder}`);
+    const activity = await safeFetchJSON(`/api/activity?user_type=${userType}&sort=${sortOrder}`);
+    console.log('Activity count:', activity.length);
+    if (activity.length) {
+      console.log('First row:', activity[0].log_id, activity[0].timestamp);
+      console.log('Last row:', activity[activity.length - 1].log_id, activity[activity.length - 1].timestamp);
+    }
+    const tbody = document.querySelector('#activityTbody') || document.querySelector('table tbody');
+    if (!tbody) return;
     tbody.innerHTML = activity.map(row => `
       <tr>
-        <td>${new Date(row.timestamp).toLocaleString()}</td>
-        <td>${row.user_type || row.user}</td>
+        <td>${row.timestamp}</td>
+        <td>${row.user_type || row.user || ''}</td>
         <td>${row.action}</td>
-        <td class="col-details">${row.details}</td>
+        <td class="col-details">${row.details || ''}</td>
       </tr>
     `).join('');
   } catch (err) {
@@ -67,18 +71,17 @@ async function loadActivity() {
   }
 }
 
-// Load recent timestamps directly from audit_logs
 async function loadTimestamps() {
   try {
     const entries = await safeFetchJSON('/api/timestamps');
-    console.log('Fetched entries:', entries);
-    const tbody = document.querySelector('table tbody');
+    const tbody = document.querySelector('#activityTbody') || document.querySelector('table tbody');
+    if (!tbody) return;
     tbody.innerHTML = entries.map(entry => `
       <tr>
-        <td>${new Date(entry.timestamp).toLocaleString()}</td>
+        <td>${entry.timestamp}</td>
         <td>${entry.user_type}</td>
         <td>${entry.action}</td>
-        <td class="col-details">${entry.details}</td>
+        <td class="col-details">${entry.details || ''}</td>
       </tr>
     `).join('');
   } catch (err) {
@@ -86,11 +89,19 @@ async function loadTimestamps() {
   }
 }
 
-// Load everything on page load
 window.addEventListener('DOMContentLoaded', () => {
   loadLogs();
   loadAlerts();
-  // Choose one depending on what you want to show in the table:
-  // loadActivity(); 
-  loadTimestamps(); 
+  loadActivity();
+  const sortSelect = document.getElementById('sortTimestamp');
+  if (sortSelect) {
+    sortSelect.value = sortOrder;
+    sortSelect.addEventListener('change', () => {
+      sortOrder = sortSelect.value;
+      loadActivity();
+    });
+  }
+  document.getElementById('userFilter')?.addEventListener('change', () => {
+    loadActivity();
+  });
 });

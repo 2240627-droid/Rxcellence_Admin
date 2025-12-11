@@ -1,9 +1,5 @@
 const dashboardModel = require('../models/dashboardModel');
 
-/**
- * GET /api/logs
- * Returns system logs (sidebar mini logs).
- */
 async function getLogs(req, res) {
   try {
     const { user_type, limit } = req.query;
@@ -15,10 +11,6 @@ async function getLogs(req, res) {
   }
 }
 
-/**
- * GET /api/alerts
- * Returns security alerts.
- */
 async function getAlerts(req, res) {
   try {
     const { user_type, limit } = req.query;
@@ -30,14 +22,14 @@ async function getAlerts(req, res) {
   }
 }
 
-/**
- * GET /api/activity
- * Returns activity log entries (excluding login events).
- */
 async function getActivityLog(req, res) {
   try {
-    const { user_type, limit } = req.query;
-    const activity = await dashboardModel.fetchActivityLog(user_type || null, Number(limit) || 15);
+    const { user_type, limit, sort } = req.query;
+    const activity = await dashboardModel.fetchActivityLog(
+      user_type || null,
+      Number(limit) || 15,
+      sort || 'DESC'
+    );
     return res.json(activity);
   } catch (err) {
     console.error('Error fetching activity log:', err);
@@ -45,14 +37,14 @@ async function getActivityLog(req, res) {
   }
 }
 
-/**
- * GET /api/timestamps
- * Returns recent audit log entries sorted by timestamp.
- */
 async function getRecentTimestamps(req, res) {
   try {
-    const { user_type, limit } = req.query;
-    const entries = await dashboardModel.fetchRecentTimestamps(user_type || null, Number(limit) || 10);
+    const { user_type, limit, sort } = req.query;
+    const entries = await dashboardModel.fetchRecentTimestamps(
+      user_type || null,
+      Number(limit) || 10,
+      sort || 'DESC'
+    );
     return res.json(entries);
   } catch (err) {
     console.error('Error fetching recent timestamps:', err);

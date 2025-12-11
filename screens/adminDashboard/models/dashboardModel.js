@@ -1,10 +1,9 @@
-// filepath: screens/adminDashboard/models/dashboardModel.js
 const db = require('../../../server/config/db');
 
 /**
  * Fetch system logs (sidebar/table mini logs)
  */
-async function fetchLogs(userType = null, limit = 5) {
+async function fetchLogs(userType = null, limit = 5, sort = 'DESC') {
   let query = `
     SELECT log_id, user_id, user_type, action, target_id, timestamp, details
     FROM audit_logs
@@ -17,7 +16,8 @@ async function fetchLogs(userType = null, limit = 5) {
     params.push(userType);
   }
 
-  query += ` ORDER BY timestamp DESC LIMIT ${Number(limit) || 5}`;
+  const order = sort && sort.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
+  query += ` ORDER BY timestamp ${order}, log_id ${order} LIMIT ${Number(limit) || 5}`;
 
   const [rows] = await db.query(query, params);
   if (!rows || rows.length === 0) return [];
@@ -27,12 +27,9 @@ async function fetchLogs(userType = null, limit = 5) {
 }
 
 /**
- * Fetch security alerts
- */
-/**
  * Fetch security alerts (unauthorized attempts, SQL injection, multiple failed logins)
  */
-async function fetchAlerts(userType = null, limit = 10) {
+async function fetchAlerts(userType = null, limit = 10, sort = 'DESC') {
   let query = `
     SELECT log_id, user_id, user_type, action, target_id, timestamp, details
     FROM audit_logs
@@ -51,19 +48,22 @@ async function fetchAlerts(userType = null, limit = 10) {
     params.push(userType);
   }
 
-  query += ` ORDER BY timestamp DESC LIMIT ${Number(limit) || 10}`;
+  const order = sort && sort.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
+  query += ` ORDER BY timestamp ${order}, log_id ${order} LIMIT ${Number(limit) || 10}`;
 
   const [rows] = await db.query(query, params);
   if (!rows || rows.length === 0) return [];
   return rows.map(row => ({
-    message: `${row.action} by ${row.user_type} at ${new Date(row.timestamp).toLocaleString()} — ${row.details}`
+    user: row.details.match(/for "(.*)"/)?.[1] || row.user_type,
+    action: row.action.replace(/_/g, ' '),
+    timestamp: new Date(row.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
   }));
 }
 
 /**
  * Fetch activity log (exclude login events)
  */
-async function fetchActivityLog(userType = null, limit = 15) {
+async function fetchActivityLog(userType = null, limit = 15, sort = 'DESC') {
   let query = `
     SELECT log_id, user_id, user_type, action, target_id, timestamp, details
     FROM audit_logs
@@ -76,30 +76,24 @@ async function fetchActivityLog(userType = null, limit = 15) {
     params.push(userType);
   }
 
-  query += ` ORDER BY timestamp DESC LIMIT ${Number(limit) || 15}`;
+  const order = sort && sort.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
+  query += ` ORDER BY timestamp ${order}, log_id ${order} LIMIT ${Number(limit) || 15}`;
 
-  try {
-    const [rows] = await db.query(query, params);
-    if (!rows || rows.length === 0) return [];
-    return rows.map(row => ({
-      timestamp: new Date(row.timestamp).toLocaleString(),
-      user_type: row.user_type,
-      action: row.action,
-      details: row.details
-    }));
-  } catch (err) {
-    console.error('Error fetching activity log:', err);
-    throw err;
-  }
+  const [rows] = await db.query(query, params);
+  if (!rows || rows.length === 0) return [];
+  return rows.map(row => ({
+    log_id: row.log_id,
+    timestamp: new Date(row.timestamp).toLocaleString(),
+    user_type: row.user_type,
+    action: row.action.replace(/_/g, ' '),
+    details: row.details
+  }));
 }
 
 /**
- * Fetch recent timestamps
- */
-/**
  * Fetch recent timestamps (exclude login events)
  */
-async function fetchRecentTimestamps(userType = null, limit = 10) {
+async function fetchRecentTimestamps(userType = null, limit = 10, sort = 'DESC') {
   let query = `
     SELECT log_id, user_id, user_type, action, target_id, timestamp, details
     FROM audit_logs
@@ -112,15 +106,17 @@ async function fetchRecentTimestamps(userType = null, limit = 10) {
     params.push(userType);
   }
 
-  query += ` ORDER BY timestamp DESC LIMIT ${Number(limit) || 10}`;
+  const order = sort && sort.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
+  query += ` ORDER BY timestamp ${order}, log_id ${order} LIMIT ${Number(limit) || 10}`;
 
   try {
     const [rows] = await db.query(query, params);
     if (!rows || rows.length === 0) return [];
     return rows.map(row => ({
+      log_id: row.log_id,
       timestamp: new Date(row.timestamp).toLocaleString(),
       user_type: row.user_type,
-      action: row.action,
+      action: row.action.replace(/_/g, ' '),
       details: row.details
     }));
   } catch (err) {
@@ -128,7 +124,6 @@ async function fetchRecentTimestamps(userType = null, limit = 10) {
     throw err;
   }
 }
-
 
 module.exports = {
   fetchLogs,
