@@ -15,7 +15,6 @@ const poolConfig = {
   database: env.DB_NAME
 };
 
-// Add SSL if certificate path is provided
 if (env.SSL_CA) {
   poolConfig.ssl = {
     ca: fs.readFileSync(path.resolve(env.SSL_CA))

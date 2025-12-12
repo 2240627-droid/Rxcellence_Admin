@@ -9,7 +9,7 @@ async function findByName(admin_name) {
   return rows[0];
 }
 
-// Create new admin with hashed password (optional, for registration)
+
 async function createAdmin(admin_name, hashedPassword) {
   await db.query(
     'INSERT INTO admins (admin_name, password) VALUES (?, ?)',

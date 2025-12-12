@@ -1,7 +1,9 @@
 const db = require("../../../server/config/db");
 const { Parser } = require("json2csv");
+const path = require("path");
+
 exports.dashboard = (req, res) => {
-  res.render("public/usermanagement", { title: "User Management" });
+  res.sendFile(path.join(__dirname, "../../../public/usermanagement.html"));
 };
 
 exports.listDoctors = async (req, res) => {
@@ -151,4 +153,3 @@ exports.bulkDeleteUsers = async (req, res) => {
     res.status(500).json({ success: false, message: "Server error" });
   }
 };
-

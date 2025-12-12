@@ -2,9 +2,9 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const medicineRoutes = require('../screens/adminMedicineMasterList/routes/medicine');
 
 // Routes
+const medicineRoutes = require('../screens/adminMedicineMasterList/routes/medicine');
 const authRoutes = require('../screens/auth/routes/auth');
 const dashboardRoutes = require('../screens/adminDashboard/routes/dashboard');
 const userManagementRoutes = require('../screens/adminUserManagement/routes/usermanagementRoutes');
@@ -49,10 +49,18 @@ app.get('/medicine-masterlist.html', requireAuth, (req, res) => {
   res.sendFile(path.join(__dirname, '../public/medicine-masterlist.html'));
 });
 
+
+app.get('/usermanagement.html', requireAuth, (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/usermanagement.html'));
+});
+
 // Auth routes
 app.use('/auth', authRoutes);
+
+// API routes
 app.use('/api', requireAuth, medicineRoutes);
 app.use('/api', requireAuth, dashboardRoutes);
+app.use('/admin', requireAuth, userManagementRoutes);
 
 // Logout route
 app.get('/logout', (req, res) => {
@@ -64,7 +72,6 @@ app.get('/logout', (req, res) => {
     res.redirect('/login.html');
   });
 });
-
 
 // 404 fallback
 app.use((req, res) => {
@@ -78,7 +85,7 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
