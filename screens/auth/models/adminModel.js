@@ -1,10 +1,10 @@
 const db = require('../../../server/config/db');
 
-// Find admin by name
-async function findByName(admin_name) {
+// Find admin by ID
+async function findById(admin_id) {
   const [rows] = await db.query(
-    'SELECT * FROM admins WHERE admin_name = ?',
-    [admin_name]
+    'SELECT * FROM admins WHERE admin_id = ?',
+    [admin_id]
   );
   return rows[0];
 }
@@ -17,4 +17,4 @@ async function createAdmin(admin_name, hashedPassword) {
   );
 }
 
-module.exports = { findByName, createAdmin };
+module.exports = { findById, createAdmin };

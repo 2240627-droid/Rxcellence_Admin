@@ -271,87 +271,54 @@ body {
     top: -5px;
 }
 
-/* --- TABLE CONTAINER --- */
-.table-container {
-    background-color: #dbece5;
-    border-radius: 20px;
-    overflow: hidden;
-    border: 1px solid #d1d1d1;
-    display: flex;
-    flex-direction: column;
-    height: auto;
-    min-height: 400px;
-}
-
-.table-wrapper {
-    overflow-x: auto;
-}
-
+/* --- TABLE --- */
 table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-    background-color: #f6f4f0;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  background-color: #f0f6f3;
 }
 
 thead {
-    background-color: #dbece5;
-    position: sticky;
-    top: 0;
-    z-index: 10;
+  background-color: #b0e4ce;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 th {
-    text-align: left;
-    padding: 15px 20px;
-    font-weight: 600;
-    color: #444;
-    white-space: nowrap;
-    border-bottom: 2px solid #c5d9d0;
-}
-
-th i {
-    margin-left: 5px;
-    font-size: 12px;
-    color: #666;
-    cursor: pointer;
+  text-align: left;
+  padding: 12px 20px;
+  font-weight: 600;
+  color: #444;
+  border-bottom: 2px solid #c5d9d0;
 }
 
 tbody tr {
-    background-color: #fcfbf9;
-    border-bottom: 1px solid #e0e0e0;
+  background-color: #fcfbf9;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 tbody tr:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 tbody tr:hover {
-    background-color: #f5f5f5;
+  background-color: #f5f5f5;
 }
 
 td {
-    padding: 12px 20px;
-    color: #555;
-    vertical-align: top;
+  padding: 12px 20px;
+  color: #555;
+  vertical-align: top;
 }
 
-.col-details {
-    color: #666;
-    font-size: 13px;
-}
-
-/* --- TABLE COLUMN WIDTHS --- */
-th:first-child {
-    width: 180px;
-}
-
-th:nth-child(2) {
-    width: 100px;
-}
-
-th:nth-child(3) {
-    width: 180px;
+.table-wrapper {
+  max-height: 590px;   
+  overflow-y: auto;    
+  overflow-x: auto;    
+  border: 1px solid #ccc;
+  border-radius: 8px;
 }
 
 /* --- RESPONSIVE DESIGN --- */
@@ -380,11 +347,7 @@ th:nth-child(3) {
         border-top-right-radius: 0;
     }
     
-    /* For mobile, add vertical scroll if needed */
-    .table-wrapper {
-        max-height: 400px;
-        overflow-y: auto;
-    }
+
 }
 
 @media (max-width: 768px) {
@@ -437,87 +400,37 @@ th:nth-child(3) {
 }
 /* Base widget list */
 .widget-list {
-  max-height: 150px;       /* limit height */
-  overflow-y: auto;        /* scroll if too long */
+  max-height: 180px;       
+  overflow-y: auto;        
   padding: 0;
   margin: 0;
   list-style: none;
 }
 
 .widget-list li {
-  padding: 6px 10px;       /* slightly more breathing room */
+  padding: 6px 10px;       
   border-bottom: 1px solid #eee;
-  font-size: 0.95rem;      /* consistent text size */
+  font-size: 0.95rem;      
   line-height: 1.4;
 }
 
-/* Warning style */
+
 .widget-list li.warning {
-  color: #b00020;          /* red text */
+  color: #b00020;          
   font-weight: 600;
-  background-color: #fff0f0; /* softer red background */
+  background-color: #fff0f0; 
   border-left: 4px solid #b00020;
 }
 
-/* Inline warning text (used in titles) */
+
 .warning-text {
   color: #b00020;
   font-weight: 600;
 }
-/* Table header styles */
-th {
-  text-align: left;
-  padding: 8px 12px;
-  font-weight: 600;
-  background-color: #f9f9f9;
-  border-bottom: 2px solid #ddd;
-}
 
-/* Sort button */
-.sort-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  margin-left: 6px;
-  color: #555;
-  transition: color 0.2s ease;
-}
-.sort-btn:hover {
-  color: #000;
-}
-
-/* Flex alignment for header controls */
-.timestamp-header,
-.user-filter-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-/* Dropdown filter (clean unified style) */
-.filter-select {
-  margin-left: 6px;
-  padding: 4px 8px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: #333;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fafafa;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.filter-select:hover {
-  background-color: #f0f0f0;
-  border-color: #999;
-}
-
-.filter-select:focus {
-  outline: none;
-  border-color: #666;
-  background-color: #fff;
-}
-.sort-btn i {
-  font-size: 0.9rem;
+/* --- FILTER STYLES --- */
+.sort-select,
+.filter-select,
+.sort-label {
+  font-family: 'Inter', sans-serif;
 }

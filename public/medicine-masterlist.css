@@ -195,7 +195,7 @@ td {
 }
 
 .table-scroll {
-  max-height: 400px;   
+  max-height: 550px;   
   overflow-y: auto;    
   overflow-x: auto;    
   border: 1px solid #ccc;
