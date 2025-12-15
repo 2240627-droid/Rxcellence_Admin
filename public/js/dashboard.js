@@ -1,5 +1,6 @@
 console.log('dashboard.js loaded');
 
+// Fetch JSON data safely, with cache-busting and login redirect fallback
 async function safeFetchJSON(url) {
   const u = url.includes('?') ? `${url}&t=${Date.now()}` : `${url}?t=${Date.now()}`;
   const res = await fetch(u, {
@@ -8,12 +9,12 @@ async function safeFetchJSON(url) {
   });
   const text = await res.text();
   if (text.startsWith('<!DOCTYPE')) {
-    window.location.href = '/login';
+    window.location.href = '/login'; // Redirect if session expired
     return [];
   }
   return JSON.parse(text);
 }
-
+// Load system logs and inject into UI
 async function loadLogs() {
   try {
     const logs = await safeFetchJSON('/api/logs');
@@ -24,7 +25,7 @@ async function loadLogs() {
     console.error('Failed to load logs:', err);
   }
 }
-
+// Load security alerts and inject into UI
 async function loadAlerts() {
   try {
     const alerts = await safeFetchJSON('/api/alerts');
@@ -44,8 +45,9 @@ async function loadAlerts() {
   }
 }
 
-let sortOrder = 'DESC';
+let sortOrder = 'DESC'; // Default sort order for activity log
 
+// Load activity log with optional filters and sorting
 async function loadActivity() {
   try {
     const userType = document.getElementById('userFilter')?.value || '';
@@ -70,7 +72,7 @@ async function loadActivity() {
     console.error('Failed to load activity log:', err);
   }
 }
-
+// Load recent timestamps (non-login actions)
 async function loadTimestamps() {
   try {
     const entries = await safeFetchJSON('/api/timestamps');
@@ -88,11 +90,13 @@ async function loadTimestamps() {
     console.error('Failed to load timestamps:', err);
   }
 }
-
+// Initialize dashboard on page load
 window.addEventListener('DOMContentLoaded', () => {
   loadLogs();
   loadAlerts();
   loadActivity();
+
+  // Handle sort dropdown changes
   const sortSelect = document.getElementById('sortTimestamp');
   if (sortSelect) {
     sortSelect.value = sortOrder;
@@ -101,6 +105,8 @@ window.addEventListener('DOMContentLoaded', () => {
       loadActivity();
     });
   }
+
+  // Handle user type filter changes
   document.getElementById('userFilter')?.addEventListener('change', () => {
     loadActivity();
   });

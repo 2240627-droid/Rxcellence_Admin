@@ -2,20 +2,21 @@
 
 /**
  * Middleware: requireAuth
- * Ensures the user is logged in (session exists) before allowing access.
+ * Checks if the user is logged in by verifying the session.
+ * Redirects to login page if not authenticated.
  */
 function requireAuth(req, res, next) {
   if (req.session && req.session.admin) {
     return next();
   }
   console.warn('Unauthorized access attempt');
-  return res.redirect('/login'); // redirect to login instead of root
+  return res.redirect('/login'); // Redirect to login page
 }
 
 /**
  * Middleware: requireRole
- * Ensures the logged-in user has a specific role (e.g., 'admin').
- * Extend this if you add role-based access later.
+ * Checks if the logged-in user has the required role.
+ * Useful for role-based access control (e.g., admin-only routes).
  */
 function requireRole(role) {
   return (req, res, next) => {

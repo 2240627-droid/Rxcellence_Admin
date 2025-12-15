@@ -1,15 +1,19 @@
 // filepath: screens/auth/controllers/authController.js
+
 const { findById } = require('../models/adminModel');
 const db = require('../../../server/config/db');
 
-// Track failed attempts and warnings in memory
+// In-memory tracking for failed login attempts and warnings
 const failedAttempts = {};
 const warnings = {};
 
 /**
  * POST /auth/login
- * Handles admin login with password check,
- * failed attempt tracking, session creation, and redirect to dashboard.
+ * Handles admin login:
+ * - Validates credentials
+ * - Tracks failed attempts
+ * - Creates session on success
+ * - Logs activity to audit_logs
  */
 const login = async (req, res) => {
   const { admin_id, password } = req.body;
@@ -17,34 +21,39 @@ const login = async (req, res) => {
 
   try {
     const admin = await findById(admin_id);
-    console.log('DB result:', admin);
 
     if (!admin) {
       return handleFailure(admin_id, res, 'Invalid credentials: user not found');
     }
 
-    // Plaintext comparison (replace with bcrypt in production!)
+    console.log('DB result:', {
+      admin_id: admin.admin_id,
+      admin_name: admin.admin_name
+    });
+
     const passwordMatch = (password === admin.password);
 
     if (!passwordMatch) {
       return handleFailure(admin_id, res, 'Invalid credentials: wrong password');
     }
 
-    // Reset failed attempts on success
+    // Reset failed attempt counter on successful login
     failedAttempts[admin_id] = 0;
     console.log(`Login successful for "${admin.admin_name}"`);
 
-    // Log success in audit_logs
+    // Log successful login to audit_logs
     await db.query(`
       INSERT INTO audit_logs (user_id, user_type, action, details, timestamp)
       VALUES (?, 'admin', 'login_success', ?, NOW())
     `, [admin.admin_id, `Successful login for "${admin.admin_name}"`]);
 
+    // Ensure session middleware is working
     if (!req.session) {
       console.error('Session is undefined — middleware may not be applied correctly');
       return res.status(500).send('Session error');
     }
 
+    // Store admin info in session
     req.session.admin = {
       id: admin.admin_id,
       name: admin.admin_name,
@@ -59,30 +68,35 @@ const login = async (req, res) => {
 };
 
 /**
- * Handle failed login attempts and warnings
- */async function handleFailure(admin_id, res, message) {
+ * Handles failed login attempts:
+ * - Increments attempt counter
+ * - Logs each failure
+ * - Issues warning after 3 tries
+ */
+async function handleFailure(admin_id, res, message) {
   failedAttempts[admin_id] = (failedAttempts[admin_id] || 0) + 1;
 
-  // Always log the failed attempt
+  // Log failed login attempt
   await db.query(`
     INSERT INTO audit_logs (user_id, user_type, action, target_id, timestamp, details)
     VALUES (NULL, 'admin', 'login_failed', ?, NOW(), ?)
   `, [null, `Failed login for user ID "${admin_id}" — ${message}`]);
 
+  // Issue warning after 3 failed attempts
   if (failedAttempts[admin_id] >= 3) {
     warnings[admin_id] = (warnings[admin_id] || 0) + 1;
     console.warn(
       `Warning issued for user ID "${admin_id}" after 3 failed attempts. Total warnings: ${warnings[admin_id]}`
     );
 
-    // Reset counter
+    // Reset failed attempt counter
     failedAttempts[admin_id] = 0;
 
-    // Insert the warning into audit_logs
+    // Log warning to audit_logs
     await db.query(`
       INSERT INTO audit_logs (user_id, user_type, action, target_id, timestamp, details)
       VALUES (NULL, 'admin', 'multiple_failed_logins', ?, NOW(), ?)
-    `, [null, `3 consecutive failed attempts for user ID "${admin_id}"`]);
+    `, [null, `Repeated Login Attempt Failure Using user ID "${admin_id}"`]);
 
     return res
       .status(403)
@@ -95,6 +109,7 @@ const login = async (req, res) => {
 
 /**
  * GET /auth/logout
+ * Destroys session and redirects to login
  */
 const logout = (req, res) => {
   if (!req.session) {

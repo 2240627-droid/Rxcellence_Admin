@@ -1,8 +1,9 @@
 console.log('medicine-masterlist.js loaded');
 
-let allMedicines = [];
-let currentSort = { field: null, asc: true };
+let allMedicines = []; // Holds all fetched medicine records
+let currentSort = { field: null, asc: true }; // Tracks current sort state
 
+// Sort medicines by a given field (toggle ASC/DESC on repeated clicks)
 function sortMedicines(field) {
   if (currentSort.field === field) {
     currentSort.asc = !currentSort.asc; 
@@ -15,12 +16,14 @@ function sortMedicines(field) {
     let valA = a[field];
     let valB = b[field];
 
+    // Numeric sort if both values are numbers
     if (!isNaN(valA) && !isNaN(valB)) {
       valA = Number(valA);
       valB = Number(valB);
       return currentSort.asc ? valA - valB : valB - valA;
     }
 
+    // String sort fallback
     return currentSort.asc
       ? String(valA).localeCompare(String(valB))
       : String(valB).localeCompare(String(valA));
@@ -28,7 +31,7 @@ function sortMedicines(field) {
 
   renderMedicines(sorted);
 
-
+  // Update sort icons in table headers
   document.querySelectorAll('th[data-sort]').forEach(th => {
     const icon = th.querySelector('.sort-icon');
     if (!icon) return;
@@ -41,6 +44,7 @@ function sortMedicines(field) {
   });
 }
 
+// Fetch JSON with cache-busting and login redirect fallback
 async function safeFetchJSON(url) {
   const u = url.includes('?') ? `${url}&t=${Date.now()}` : `${url}?t=${Date.now()}`;
   const res = await fetch(u, { cache: 'no-store', headers: { 'Cache-Control': 'no-cache' } });
@@ -52,6 +56,7 @@ async function safeFetchJSON(url) {
   return JSON.parse(text);
 }
 
+// Render medicine rows into the table body
 function renderMedicines(medicines) {
   const tbody = document.getElementById('medicineTbody');
   if (!tbody) {
@@ -72,7 +77,7 @@ function renderMedicines(medicines) {
   `).join('');
 }
 
-
+// Load medicines from API and render them
 async function loadMedicines() {
   try {
     const medicines = await safeFetchJSON('/api/medicines');
@@ -84,6 +89,7 @@ async function loadMedicines() {
   }
 }
 
+// Initialize search and sorting on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
   const searchInput = document.getElementById('searchInput') || document.querySelector('.search-bar');
   const tbody = document.getElementById('medicineTbody');
@@ -96,6 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
+  // Live search filter
   const onSearch = e => {
     const keyword = (e.target.value || '').toLowerCase().trim();
     console.log('Search triggered:', keyword);
@@ -129,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
   searchInput.addEventListener('input', onSearch);
   searchInput.addEventListener('keyup', onSearch);
 
-  // Sorting listeners
+  // Enable sorting on table headers
   document.querySelectorAll('th[data-sort]').forEach(th => {
     th.style.cursor = 'pointer';
     th.addEventListener('click', () => {

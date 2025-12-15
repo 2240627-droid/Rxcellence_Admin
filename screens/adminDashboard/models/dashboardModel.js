@@ -1,7 +1,8 @@
 const db = require('../../../server/config/db');
 
 /**
- * Fetch system logs (sidebar/table mini logs)
+ * Fetch system logs for sidebar/table display.
+ * Includes login and record-related actions.
  */
 async function fetchLogs(userType = null, limit = 5, sort = 'DESC') {
   let query = `
@@ -11,23 +12,28 @@ async function fetchLogs(userType = null, limit = 5, sort = 'DESC') {
   `;
   const params = [];
 
+  // Filter by user type if provided
   if (userType) {
     query += ` AND user_type = ?`;
     params.push(userType);
   }
 
+  // Sort and limit results
   const order = sort && sort.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
   query += ` ORDER BY timestamp ${order}, log_id ${order} LIMIT ${Number(limit) || 5}`;
 
   const [rows] = await db.query(query, params);
   if (!rows || rows.length === 0) return [];
+
+  // Format logs into readable messages
   return rows.map(row => ({
     message: `${row.user_type} ${row.action} at ${new Date(row.timestamp).toLocaleString()}`
   }));
 }
 
 /**
- * Fetch security alerts (unauthorized attempts, SQL injection, multiple failed logins)
+ * Fetch security-related alerts.
+ * Includes unauthorized access, SQL injection, and multiple failed logins.
  */
 async function fetchAlerts(userType = null, limit = 10, sort = 'DESC') {
   let query = `
@@ -53,6 +59,8 @@ async function fetchAlerts(userType = null, limit = 10, sort = 'DESC') {
 
   const [rows] = await db.query(query, params);
   if (!rows || rows.length === 0) return [];
+
+  // Format alerts with simplified fields
   return rows.map(row => ({
     user: row.details.match(/for "(.*)"/)?.[1] || row.user_type,
     action: row.action.replace(/_/g, ' '),
@@ -61,7 +69,7 @@ async function fetchAlerts(userType = null, limit = 10, sort = 'DESC') {
 }
 
 /**
- * Fetch activity log (exclude login events)
+ * Fetch general activity logs (excluding login events).
  */
 async function fetchActivityLog(userType = null, limit = 15, sort = 'DESC') {
   let query = `
@@ -81,6 +89,7 @@ async function fetchActivityLog(userType = null, limit = 15, sort = 'DESC') {
 
   const [rows] = await db.query(query, params);
   if (!rows || rows.length === 0) return [];
+
   return rows.map(row => ({
     log_id: row.log_id,
     timestamp: new Date(row.timestamp).toLocaleString(),
@@ -91,7 +100,7 @@ async function fetchActivityLog(userType = null, limit = 15, sort = 'DESC') {
 }
 
 /**
- * Fetch recent timestamps (exclude login events)
+ * Fetch recent timestamps for non-login actions.
  */
 async function fetchRecentTimestamps(userType = null, limit = 10, sort = 'DESC') {
   let query = `
@@ -112,6 +121,7 @@ async function fetchRecentTimestamps(userType = null, limit = 10, sort = 'DESC')
   try {
     const [rows] = await db.query(query, params);
     if (!rows || rows.length === 0) return [];
+
     return rows.map(row => ({
       log_id: row.log_id,
       timestamp: new Date(row.timestamp).toLocaleString(),

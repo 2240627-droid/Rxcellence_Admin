@@ -1,3 +1,4 @@
+// Load environment variables from .env file into process.env
 require('dotenv').config();
 
 module.exports = {
@@ -8,4 +9,5 @@ module.exports = {
   DB_NAME: process.env.DB_NAME,
   SSL_CA: process.env.SSL_CA
 };
+// Log selected environment values for debugging
 console.log('Loaded env:', process.env.DB_HOST, process.env.DB_USER);

@@ -1,5 +1,9 @@
 const dashboardModel = require('../models/dashboardModel');
 
+/**
+ * GET /api/logs
+ * Returns system logs (e.g., login attempts, record views/updates).
+ */
 async function getLogs(req, res) {
   try {
     const { user_type, limit } = req.query;
@@ -11,6 +15,10 @@ async function getLogs(req, res) {
   }
 }
 
+/**
+ * GET /api/alerts
+ * Returns security-related alerts (e.g., unauthorized access, SQL injection).
+ */
 async function getAlerts(req, res) {
   try {
     const { user_type, limit } = req.query;
@@ -22,6 +30,10 @@ async function getAlerts(req, res) {
   }
 }
 
+/**
+ * GET /api/activity
+ * Returns general activity logs (excluding login events).
+ */
 async function getActivityLog(req, res) {
   try {
     const { user_type, limit, sort } = req.query;
@@ -37,6 +49,10 @@ async function getActivityLog(req, res) {
   }
 }
 
+/**
+ * GET /api/timestamps
+ * Returns recent timestamps for non-login actions.
+ */
 async function getRecentTimestamps(req, res) {
   try {
     const { user_type, limit, sort } = req.query;
